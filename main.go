@@ -30,16 +30,16 @@ func main() {
 	log.Println("Http server started on port 8080")
 
 	router := mux.NewRouter().StrictSlash(true)
-	initaliseHandlers(router)
+	handlersMethods(router)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
-func initaliseHandlers(router *mux.Router) {
-	router.HandleFunc("/create", controllers.CreatePerson).Methods("POST")
-	router.HandleFunc("/get", controllers.GetAllPerson).Methods("GET")
-	router.HandleFunc("/get/{id}", controllers.GetPersonByID).Methods("GET")
-	router.HandleFunc("/update/{id}", controllers.UpdatePersonByID).Methods("PUT")
-	router.HandleFunc("/delete/{id}", controllers.DeletPersonByID).Methods("DELETE")
+func handlersMethods(router *mux.Router) {
+	router.HandleFunc("/add", controllers.CreateStudent).Methods("POST")
+	router.HandleFunc("/get", controllers.GetAllStudent).Methods("GET")
+	router.HandleFunc("/get/{id}", controllers.GetStudentById).Methods("GET")
+	router.HandleFunc("/update/{id}", controllers.UpdateStudentByID).Methods("PUT")
+	router.HandleFunc("/delete/{id}", controllers.DeletStudentByID).Methods("DELETE")
 }
 
 //4th step

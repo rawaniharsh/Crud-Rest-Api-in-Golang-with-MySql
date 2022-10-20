@@ -11,57 +11,57 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//GetAllPerson get all person data
-func GetAllPerson(w http.ResponseWriter, r *http.Request) {
-	var persons []entity.Student
-	database.Connector.Find(&persons)
+//get all student data
+func GetAllStudent(w http.ResponseWriter, r *http.Request) {
+	var students []entity.Student
+	database.Connector.Find(&students)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(persons)
+	json.NewEncoder(w).Encode(students)
 }
 
-//GetPersonByID returns person with specific ID
-func GetPersonByID(w http.ResponseWriter, r *http.Request) {
+//get student by specific id
+func GetStudentById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["id"]
 
-	var person entity.Student
-	database.Connector.First(&person, key)
+	var student entity.Student
+	database.Connector.First(&student, key)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(person)
+	json.NewEncoder(w).Encode(student)
 }
 
-//CreatePerson creates person
-func CreatePerson(w http.ResponseWriter, r *http.Request) {
+//create student
+func CreateStudent(w http.ResponseWriter, r *http.Request) {
 	requestBody, _ := ioutil.ReadAll(r.Body)
-	var person entity.Student
-	json.Unmarshal(requestBody, &person)
+	var student entity.Student
+	json.Unmarshal(requestBody, &student)
 
-	database.Connector.Create(person)
+	database.Connector.Create(student)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(person)
+	json.NewEncoder(w).Encode(student)
 }
 
-//UpdatePersonByID updates person with respective ID
-func UpdatePersonByID(w http.ResponseWriter, r *http.Request) {
+//update student by if
+func UpdateStudentByID(w http.ResponseWriter, r *http.Request) {
 	requestBody, _ := ioutil.ReadAll(r.Body)
-	var person entity.Student
-	json.Unmarshal(requestBody, &person)
-	database.Connector.Save(&person)
+	var student entity.Student
+	json.Unmarshal(requestBody, &student)
+	database.Connector.Save(&student)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(person)
+	json.NewEncoder(w).Encode(student)
 }
 
-//DeletPersonByID delete's person with specific ID
-func DeletPersonByID(w http.ResponseWriter, r *http.Request) {
+//delete student by id
+func DeletStudentByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["id"]
 
-	var person entity.Student
+	var student entity.Student
 	id, _ := strconv.ParseInt(key, 10, 64)
-	database.Connector.Where("id = ?", id).Delete(&person)
+	database.Connector.Where("id = ?", id).Delete(&student)
 	w.WriteHeader(http.StatusNoContent)
 }
